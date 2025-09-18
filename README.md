@@ -14,7 +14,7 @@ Make sure to encourage the Infuse developers to add proper external audio file s
 
 https://github.com/user-attachments/assets/676929b2-fc1f-4ed5-a3a4-6ee9d5d8b8e9
 
-###### *As you can see, the incompatible TrueHD 7.1 tracks that Infuse detects are invisibly replaced with compatible Atmos tracks*
+###### *As you can see, the incompatible TrueHD 7.1 tracks that Infuse detects are invisibly replaced with compatible Atmos tracks. Video has audio btw*
 
 ## Caveats
 
