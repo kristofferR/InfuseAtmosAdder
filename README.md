@@ -1,24 +1,29 @@
 # InfuseAtmosAdder (Alpha)
 
-InfuseAtmosAdder provides a lightweight proxy that sits in between Jellyfin and Infuse, it can stitch an external Dolby DP Atmos track, or other audio files, into the video on the fly, without reencoding.
+InfuseAtmosAdder is a lightweight proxy that sits in between Jellyfin and Infuse, it can stitch a Dolby Atmos track (or other audio files) into the video on the fly, without reencoding.
 
 The original media on disk is never modified; Jellyfin keeps serving the video, and the proxy adds the matching audio track while the stream is running.
 
-Not only that, but the TrueHD Atmos track is automatically replaced with the Infuse-compatible track, and set as default. Commentary and other such tracks are preserved.
+Not only that, but the TrueHD Atmos track is automatically replaced with the Infuse-compatible Atmos track, and set as default. Commentary and other such tracks are preserved.
 
-### **[DeeZy](https://github.com/jessielw/DeeZy) effectively lets you play UHD Blu-Ray rips/remuxes with Atmos on Infuse!** *[More information here --->](https://community.firecore.com/t/help-get-more-dolby-atmos-on-apple-tv/16477/1303)*
+*[DeeZy](https://github.com/jessielw/DeeZy) is that tool you'll use genererate Infuse-compatible Atmos tracks.* *[More information here](https://community.firecore.com/t/help-get-more-dolby-atmos-on-apple-tv/16477/1303)* I'll create better info soon, but shoudn't be too hard.
 
 Why such a hacky solution? Because Firecore haven't implemented external audio track support yet, [despite it being a core part of Jellyfin for years.](https://jellyfin.org/docs/general/server/media/movies#external-subtitles-and-audio-tracks)
 
 Make sure to encourage the Infuse developers to add proper external audio file support [by liking and commenting here!](https://community.firecore.com/t/support-for-external-audio-files/15848) Hopefully this project get deprecated fast.
 
+https://github.com/user-attachments/assets/676929b2-fc1f-4ed5-a3a4-6ee9d5d8b8e9
+
+###### *As you can see, the incompatible TrueHD 7.1 tracks that Infuse detects are invisibly replaced with compatible Atmos tracks*
 
 ## Caveats
 
 - Very Alpha: expect rough edges. Report issues with logs so they can be fixed.
 - Progressive streaming: seeking behaves like a live stream because the proxy does not serve real byte ranges yet.
 - Seeking doesn't work nearly at all, but skipping 10s forward a 100 times does
-- File-system only: sidecars must live next to the video file; Jellyfin’s external-audio URLs are not used.
+- File-system only: external audio tracks must live next to the video file; Jellyfin’s external-audio URLs are not used.
+- Some movies simply don't play. Help me debug this, I have no idea why
+- External audio tracks must be generated first with DeeZy or another tool, more helpful guidance on that soon
 
 ## Requirements
 
@@ -88,7 +93,7 @@ Look for uvicorn messages like `Uvicorn running on http://0.0.0.0:9999`.
 ## Connect Infuse
 
 1. In Infuse, edit your Jellyfin share.
-2. Change the server address to the host running the proxy (for example `http://proxy-hostname:9999`), or just add a dupe with the proxy port. If you add a new share with just a different port you can still use the old one exactly as before, you just get another one where external audio files works but skipping doesn't.
+2. Change the server address to the host running the proxy (for example `http://proxy-hostname:9999`), or just add a dupe with the proxy port. If you add a new share with just a different port you can still use the old one exactly as before, you just get another one where external Atmos files works but skipping doesn't.
 3. Keep your Jellyfin credentials unchanged.
 4. Play a title that has a external audio track. Infuse should now list the extra audio stream.
 
