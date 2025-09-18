@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  infuse-atmos-adder:
+    image: python:3.12-slim
+    container_name: InfuseAtmosAdder
+    working_dir: /app
+    command:
+      - bash
+      - -lc
+      - |
+          set -euo pipefail
+          exec /app/scripts/bootstrap.sh
+    deploy:
+      resources:
+        limits:
+          memory: ${PROXY_MEMORY_LIMIT:-10240M}
+        reservations:
+          memory: ${PROXY_MEMORY_RESERVATION:-512M}
+    environment:
+      # --- frequently adjusted ---
+      JF_URL: http://10.0.0.50:8096
+      PORT: "9999"
+      MEDIA_ROOTS: /media/movies:/media/TV
+      AUDIO_EXTS: eac3,ec3,ac3,flac,mka,ogg,opus
+      MUX_ON: "true"
+      # --- behaviour knobs ---
+      MUX_CONTAINER: mkv
+      PRESERVE_TRUEHD_WITH_SIDE: "false"
+      KEEP_ORIGINAL_TRUEHD: "false"
+      AUDIO_OFFSET_MS: "0"
+      FORCE_PARTIAL_206: "true"
+      FORCE_APPROX_RANGE: "true"
+      MUX_IDLE_TIMEOUT: "0"
+      MUX_MAX_DURATION: "0"
+      MUX_PROGRESS_INTERVAL: "0"
+      TRIM_ON_SESSION_STOP: "true"
+      TRIM_AGGRESSIVE_MODE: "true"
+      TRIM_AGGRESSIVE_INTERVAL: "120"
+      TRIM_AGGRESSIVE_POST_STREAM: "true"
+      TRIM_LARGE_RESPONSE_BYTES: "67108864"
+      MUX_USE_MKVMERGE: "false"
+      # --- diagnostics & logging ---
+      LOG_LEVEL: INFO
+      LOG_DIR: /app/logs
+      DEBUG_FFMPEG: "false"
+      FORCE_INSECURE_CONTENT_LENGTH: "true"
+      MUX_HEADER_CAPTURE_LIMIT: "0"
+      # --- binary paths ---
+      FFMPEG: /app/.ffmpeg/ffmpeg
+      FFPROBE: /app/.ffmpeg/ffprobe
+    ports:
+      - "9999:9999"
+    # Format is outside-path:inside-path[:ro]. The text before the colon is the folder on your machine; the text after
+    # it is where that folder appears inside the container. Add ':ro' at the end when you want the container to treat it
+    # as read-only.
+    volumes:
+      - /mnt/data/media/movies:/media/movies:ro
+      - /mnt/data/media/TV:/media/TV:ro
+      - /mnt/apps/InfuseAtmosAdder:/app
+    restart: unless-stopped
