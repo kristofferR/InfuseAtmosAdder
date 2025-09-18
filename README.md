@@ -6,9 +6,9 @@ The original media on disk is never modified; Jellyfin keeps serving the video, 
 
 Not only that, but the TrueHD Atmos track is automatically replaced with the Infuse-compatible Atmos track, and set as default. Commentary and other such tracks are preserved.
 
-*[DeeZy](https://github.com/jessielw/DeeZy) is that tool you'll use genererate Infuse-compatible Atmos tracks.* *[More information here](https://community.firecore.com/t/help-get-more-dolby-atmos-on-apple-tv/16477/1303) I'll create better info soon, but it shoudn't be too hard to figure out in the mean time.*
+*[DeeZy](https://github.com/jessielw/DeeZy) is that tool you'll use genererate Infuse-compatible Atmos tracks.* *[More information here.](https://community.firecore.com/t/help-get-more-dolby-atmos-on-apple-tv/16477/1303) I'll create better guides soon, but it shoudn't be too hard to figure out in the mean time.*
 
-Why such a hacky solution? Because Firecore haven't implemented external audio track support yet, [despite it being a core part of Jellyfin for years.](https://jellyfin.org/docs/general/server/media/movies#external-subtitles-and-audio-tracks)
+Why such a hacky solution as InfuseAtmosAdder? Because Firecore haven't implemented external audio track support yet, [despite it being a core part of Jellyfin for years.](https://jellyfin.org/docs/general/server/media/movies#external-subtitles-and-audio-tracks)
 
 Make sure to encourage the Infuse developers to add proper external audio file support [by liking and commenting here!](https://community.firecore.com/t/support-for-external-audio-files/15848) Hopefully this project get deprecated fast.
 
